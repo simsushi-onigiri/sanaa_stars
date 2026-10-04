@@ -299,33 +299,30 @@
 </div>
 
 <script>
-    // 10 stars tracing the Libra figure: the kite-shaped "scales" (beta, gamma,
-  // sigma, alpha) plus the extra stars branching off it.
-  const points = [
-    { role:'beta',   x: 72, y: 40, clickable:true,
+      const points = [
+    { role:'a', x: 34, y: 41, clickable:true,
       text: "Your excellent tastes from pop-culture to music has influenced me to become a bigger geek and music lover XD" },
-    { role:'gamma',  x: 34, y: 46, clickable:true,
+    { role:'b', x: 75, y: 40, clickable:true,
       text: "Your smile still being the same as when you were a baby makes my heart ache :')" },
-    { role:'sigma',  x: 40, y: 72, clickable:true,
+    { role:'c', x: 86, y: 62, clickable:true,
       text: "A little bit of a disaster but at least she brings a rainbow along with it XD" },
-    { role:'alpha',  x: 68, y: 68, clickable:true,
+    { role:'d', x: 12, y: 58, clickable:true,
       text: "Your intellect is a defining trait that I have always admired <3" },
-    { role:'upsilon', x: 22, y: 58, clickable:true,
+    { role:'e', x: 39, y: 52, clickable:true,
       text: "Your obvious displays of love will always touch my heart and make me glad to have you in my life T~T" },
-    { role:'tau',    x: 12, y: 68, clickable:true,
+    { role:'f', x: 33, y: 59, clickable:true,
       text: "You are a Diamond in the wild. The Rarest of Pokemon Cards. And Lucky are the only ones who treasure your presence." },
-    { role:'theta',  x: 82, y: 82, clickable:true,
+    { role:'g', x: 74, y: 74, clickable:true,
       text: "Never had a day where she did not grind like her life depended on it." },
-    { role:'iota',   x: 22, y: 40, clickable:true,
+    { role:'h', x: 81, y: 85, clickable:true,
       text: "The holder of logic and comfort, without whom I might make every living person an enemy. " },
-    { role:'eta',    x: 56, y: 86, clickable:true,
+    { role:'loose1', x: 88, y: 50, clickable:true,
       text: "A true hedgehog — always scittering further into my heart hehe <3" },
-    { role:'delta',  x: 84, y: 52, clickable:true,
+    { role:'loose2', x: 72, y: 66, clickable:true,
       text: "My child, my chaotic pet, my juicy gossip messenger and my adored bestie <3" }
   ];
 
-  // the kite (0-1-2-3-0), then the branches off it
-  const edges = [[0,1],[1,2],[2,3],[3,0],[1,4],[4,5],[1,7],[3,6],[3,8],[0,9]];
+  const edges = [[0,1],[0,2],[1,2],[0,4],[4,5],[5,3],[2,6],[6,7]];
   
   const active = new Array(points.length).fill(false);
   const drawnEdges = new Set();
