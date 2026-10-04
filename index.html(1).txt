@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For The Dearest Hedgehog & Forever Lost Half, Sanaa-Chanaa The Loveliest</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0f2c;
+    --bg-mid:#131c46;
+    --star-glow:#ffe9a8;
+    --star-core:#fffaf0;
+    --accent-violet:#93a6ff;
+    --text-primary:#f4f1ff;
+    --text-soft:#b9c2e8;
+    --unopened:#54608f;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:radial-gradient(ellipse at 50% 0%, var(--bg-mid) 0%, var(--bg-deep) 65%);
+    overflow-x:hidden;
+    font-family:'Quicksand', sans-serif;
+    color:var(--text-primary);
+  }
+
+  .sky{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:600px;
+    overflow:hidden;
+  }
+
+  /* small ambient stars */
+  .dot{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:var(--text-primary);
+    border-radius:50%;
+    opacity:0.6;
+    animation:twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.15;}
+    50%{opacity:0.9;}
+  }
+
+  header{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:6vh 1.5rem 1rem;
+  }
+  header .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    color:var(--accent-violet);
+    margin:0 0 0.6rem;
+  }
+  header h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    margin:0 0 0.6rem;
+    letter-spacing:0.02em;
+  }
+  header p{
+    font-size:0.95rem;
+    color:var(--text-soft);
+    max-width:32rem;
+    margin:0 auto;
+    line-height:1.6;
+  }
+
+  svg.lines{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+  }
+  svg.lines line{
+    stroke:var(--accent-violet);
+    stroke-width:1;
+    opacity:0;
+    transition:opacity 1.2s ease;
+  }
+  svg.lines line.drawn{
+    opacity:0.45;
+  }
+
+  .star-btn{
+    position:absolute;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    z-index:2;
+    transform:translate(-50%,-50%);
+    filter:drop-shadow(0 0 6px rgba(84,96,143,0.5));
+    transition:filter 0.6s ease, transform 0.3s ease;
+  }
+  .star-btn:hover{
+    transform:translate(-50%,-50%) scale(1.08);
+  }
+  .star-btn svg{
+    width:38px;
+    height:38px;
+    display:block;
+  }
+  .star-btn polygon{
+    fill:var(--unopened);
+    transition:fill 0.8s ease;
+  }
+  .star-btn.opened{
+    filter:drop-shadow(0 0 14px var(--star-glow)) drop-shadow(0 0 26px rgba(255,233,168,0.5));
+    animation:pulse 3s ease-in-out infinite;
+  }
+  .star-btn.opened polygon{
+    fill:var(--star-core);
+  }
+  @keyframes pulse{
+    0%,100%{filter:drop-shadow(0 0 14px var(--star-glow)) drop-shadow(0 0 26px rgba(255,233,168,0.5));}
+    50%{filter:drop-shadow(0 0 20px var(--star-glow)) drop-shadow(0 0 34px rgba(255,233,168,0.7));}
+  }
+
+  .connector-star{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    pointer-events:none;
+    filter:drop-shadow(0 0 5px rgba(255,233,168,0.55));
+  }
+  .connector-star svg{
+    width:14px;
+    height:14px;
+    display:block;
+  }
+  .connector-star polygon{
+    fill:var(--star-glow);
+    opacity:0.75;
+  }
+
+  footer.note{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:2;
+    text-align:center;
+    padding:0 1.5rem 4vh;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--text-soft);
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity 1s ease, transform 1s ease;
+    pointer-events:none;
+  }
+  footer.note.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* card overlay */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(6,9,26,0.72);
+    backdrop-filter:blur(3px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:10;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.4s ease;
+  }
+  .overlay.active{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .card-scene{
+    perspective:1400px;
+    width:min(90vw, 420px);
+  }
+  .card{
+    position:relative;
+    width:100%;
+    min-height:260px;
+    transform-style:preserve-3d;
+    transition:transform 0.9s cubic-bezier(.4,.2,.2,1);
+  }
+  .overlay.active .card{
+    transform:rotateY(180deg);
+  }
+  .card-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2rem;
+    text-align:center;
+  }
+  .card-front{
+    background:linear-gradient(160deg, var(--bg-mid), var(--bg-deep));
+    border:1px solid rgba(255,233,168,0.25);
+  }
+  .card-front svg{
+    width:54px;
+    height:54px;
+    filter:drop-shadow(0 0 12px var(--star-glow));
+  }
+  .card-back{
+    background:linear-gradient(160deg, #1a2456, var(--bg-deep));
+    border:1px solid rgba(147,166,255,0.35);
+    transform:rotateY(180deg);
+    flex-direction:column;
+    gap:0.9rem;
+  }
+  .card-back .label{
+    font-size:0.7rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent-violet);
+  }
+  .card-back p{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.35rem;
+    line-height:1.5;
+    margin:0;
+    color:var(--text-primary);
+  }
+  .close-btn{
+    position:absolute;
+    top:-2.6rem;
+    right:0;
+    background:none;
+    border:none;
+    color:var(--text-soft);
+    font-size:0.85rem;
+    letter-spacing:0.15em;
+    cursor:pointer;
+    font-family:'Quicksand', sans-serif;
+  }
+  .close-btn:hover{
+    color:var(--text-primary);
+  }
+
+  @media (max-width:600px){
+    .star-btn svg{ width:30px; height:30px; }
+    header{ padding-top:8vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky" id="sky">
+  <svg class="lines" id="lines"></svg>
+  <header>
+    <p class="eyebrow">For The Cutest Hedgehog & Forever Lost Half, Sanaa-Chanaa The Loveliest</p>
+    <h1>10 traits I adore about you, adorned as stars in the sky <3</h1>
+    <p>tap a star to open it.</p>
+  </header>
+  <!-- big stars injected by JS -->
+  <footer class="note" id="finalNote">Happiest Birthday Sanaaaa <3</footer>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="card-scene">
+    <button class="close-btn" id="closeBtn">close ✕</button>
+    <div class="card" id="card">
+      <div class="card-face card-front">
+        <svg viewBox="0 0 51 48"><polygon points="25.5,1 31.6,18.5 50,18.9 35.3,29.9 40.7,47.5 25.5,36.9 10.3,47.5 15.7,29.9 1,18.9 19.4,18.5" fill="#ffe9a8"/></svg>
+      </div>
+      <div class="card-face card-back">
+        <span class="label" id="cardLabel"></span>
+        <p id="cardText"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 10 points tracing the real Leo outline: the sickle (head/mane) on the
+  // left, curving down into the body and tail on the right. 5 are the big
+  // clickable stars (your characteristics), 5 are small connector stars that
+  // just complete the shape so the whole thing reads as Leo once explored.
+  // Whole layout sits lower (y starts ~30%) so it clears the header text.
+  const points = [
+    { role:'epsilon', x: 10, y: 42, clickable:true,
+      text: "Your excellent tastes from pop-culture to music has influenced me to become a bigger geek and music lover XD" },
+    { role:'mu',       x: 15, y: 34, clickable:true,
+      text: "Your smile still being the same as when you were a baby makes my heart ache :')" },
+    { role:'adhafera', x: 30, y: 43, clickable:true,
+      text: "A little bit of a disaster but at least she brings a rainbow along with it XD" },
+    { role:'algieba',  x: 32, y: 56, clickable:true,
+      text: "Your intellect is a defining trait that I have always admired <3" },
+    { role:'eta',      x: 24, y: 66, clickable:true,
+      text: "Your obvious displays of love will always touch my heart and make me glad to have you in my life T~T" },
+    { role:'regulus',  x: 24, y: 80, clickable:true,
+      text: "You are a Diamond in the wild. The Rarest of Pokemon Cards. And Lucky are the only ones who treasure your presence." },
+    { role:'zosma',    x: 65, y: 53, clickable:true,
+      text: "Never had a day where she did not grind like her life depended on it." },
+    { role:'chertan',  x: 68, y: 71, clickable:true,
+      text: "The holder of logic and comfort, without whom I might make every living person an enemy. " },
+    { role:'denebola', x: 88, y: 74, clickable:true,
+      text: "A true hedgehog — always scittering further into my heart hehe <3" },
+    { role:'iota',     x: 73, y: 85, clickable:true,
+      text: "My child, my chaotic pet, my juicy gossip messenger and my adored bestie <3" }
+  ];
+
+  // chain of connections that traces the sickle then the body/tail,
+  // plus one branch (chertan -> iota) for the hind leg
+  const edges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[7,9]];
+
+  const active = new Array(points.length).fill(false);
+  const drawnEdges = new Set();
+  let openedClickableCount = 0;
+  const totalClickable = points.filter(p => p.clickable).length;
+
+  const sky = document.getElementById('sky');
+  const linesSvg = document.getElementById('lines');
+  const overlay = document.getElementById('overlay');
+  const cardText = document.getElementById('cardText');
+  const cardLabel = document.getElementById('cardLabel');
+  const closeBtn = document.getElementById('closeBtn');
+  const finalNote = document.getElementById('finalNote');
+
+  // small ambient stars
+  for(let i=0;i<140;i++){
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.style.left = Math.random()*100 + '%';
+    d.style.top = Math.random()*100 + '%';
+    d.style.animationDelay = (Math.random()*4) + 's';
+    sky.appendChild(d);
+  }
+
+  const starPoints = "25.5,1 31.6,18.5 50,18.9 35.3,29.9 40.7,47.5 25.5,36.9 10.3,47.5 15.7,29.9 1,18.9 19.4,18.5";
+
+  points.forEach((p, i) => {
+    if(p.clickable){
+      const btn = document.createElement('button');
+      btn.className = 'star-btn';
+      btn.style.left = p.x + '%';
+      btn.style.top = p.y + '%';
+      btn.setAttribute('aria-label', 'reveal star');
+      btn.innerHTML = `<svg viewBox="0 0 51 48"><polygon points="${starPoints}"/></svg>`;
+      btn.addEventListener('click', () => openStar(i));
+      sky.appendChild(btn);
+      p.el = btn;
+    } else {
+      const dot = document.createElement('div');
+      dot.className = 'connector-star';
+      dot.style.left = p.x + '%';
+      dot.style.top = p.y + '%';
+      dot.innerHTML = `<svg viewBox="0 0 51 48"><polygon points="${starPoints}"/></svg>`;
+      sky.appendChild(dot);
+      active[i] = true; // connectors are always "on"
+    }
+  });
+
+  // draw any lines that are already possible (connector-to-connector)
+  tryDrawEdges();
+
+  function openStar(i){
+    cardText.textContent = points[i].text;
+    cardLabel.textContent = 'star ' + (openedClickableCount + 1) + ' of ' + totalClickable;
+    overlay.classList.add('active');
+
+    if(!active[i]){
+      active[i] = true;
+      points[i].el.classList.add('opened');
+      openedClickableCount++;
+      tryDrawEdges();
+
+      if(openedClickableCount === totalClickable){
+        setTimeout(()=> finalNote.classList.add('show'), 900);
+      }
+    }
+  }
+
+  function tryDrawEdges(){
+    edges.forEach((edge, idx) => {
+      const [a, b] = edge;
+      if(active[a] && active[b] && !drawnEdges.has(idx)){
+        drawLine(points[a], points[b]);
+        drawnEdges.add(idx);
+      }
+    });
+  }
+
+  function drawLine(from, to){
+    const ns = 'http://www.w3.org/2000/svg';
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', from.x + '%');
+    line.setAttribute('y1', from.y + '%');
+    line.setAttribute('x2', to.x + '%');
+    line.setAttribute('y2', to.y + '%');
+    linesSvg.appendChild(line);
+    requestAnimationFrame(()=> line.classList.add('drawn'));
+  }
+
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+  });
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) overlay.classList.remove('active');
+  });
+</script>
+
+</body>
+</html>
