@@ -299,38 +299,34 @@
 </div>
 
 <script>
-  // 10 points tracing the real Leo outline: the sickle (head/mane) on the
-  // left, curving down into the body and tail on the right. 5 are the big
-  // clickable stars (your characteristics), 5 are small connector stars that
-  // just complete the shape so the whole thing reads as Leo once explored.
-  // Whole layout sits lower (y starts ~30%) so it clears the header text.
+    // 10 stars tracing the Libra figure: the kite-shaped "scales" (beta, gamma,
+  // sigma, alpha) plus the extra stars branching off it.
   const points = [
-    { role:'epsilon', x: 10, y: 42, clickable:true,
+    { role:'beta',   x: 72, y: 40, clickable:true,
       text: "Your excellent tastes from pop-culture to music has influenced me to become a bigger geek and music lover XD" },
-    { role:'mu',       x: 15, y: 34, clickable:true,
+    { role:'gamma',  x: 34, y: 46, clickable:true,
       text: "Your smile still being the same as when you were a baby makes my heart ache :')" },
-    { role:'adhafera', x: 30, y: 43, clickable:true,
+    { role:'sigma',  x: 40, y: 72, clickable:true,
       text: "A little bit of a disaster but at least she brings a rainbow along with it XD" },
-    { role:'algieba',  x: 32, y: 56, clickable:true,
+    { role:'alpha',  x: 68, y: 68, clickable:true,
       text: "Your intellect is a defining trait that I have always admired <3" },
-    { role:'eta',      x: 24, y: 66, clickable:true,
+    { role:'upsilon', x: 22, y: 58, clickable:true,
       text: "Your obvious displays of love will always touch my heart and make me glad to have you in my life T~T" },
-    { role:'regulus',  x: 24, y: 80, clickable:true,
+    { role:'tau',    x: 12, y: 68, clickable:true,
       text: "You are a Diamond in the wild. The Rarest of Pokemon Cards. And Lucky are the only ones who treasure your presence." },
-    { role:'zosma',    x: 65, y: 53, clickable:true,
+    { role:'theta',  x: 82, y: 82, clickable:true,
       text: "Never had a day where she did not grind like her life depended on it." },
-    { role:'chertan',  x: 68, y: 71, clickable:true,
+    { role:'iota',   x: 22, y: 40, clickable:true,
       text: "The holder of logic and comfort, without whom I might make every living person an enemy. " },
-    { role:'denebola', x: 88, y: 74, clickable:true,
+    { role:'eta',    x: 56, y: 86, clickable:true,
       text: "A true hedgehog — always scittering further into my heart hehe <3" },
-    { role:'iota',     x: 73, y: 85, clickable:true,
+    { role:'delta',  x: 84, y: 52, clickable:true,
       text: "My child, my chaotic pet, my juicy gossip messenger and my adored bestie <3" }
   ];
 
-  // chain of connections that traces the sickle then the body/tail,
-  // plus one branch (chertan -> iota) for the hind leg
-  const edges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[7,9]];
-
+  // the kite (0-1-2-3-0), then the branches off it
+  const edges = [[0,1],[1,2],[2,3],[3,0],[1,4],[4,5],[1,7],[3,6],[3,8],[0,9]];
+  
   const active = new Array(points.length).fill(false);
   const drawnEdges = new Set();
   let openedClickableCount = 0;
